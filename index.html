@@ -4,219 +4,289 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PHOENIX Shop</title>
-
 <style>
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
+    margin:0;
+    font-family:'Arial',sans-serif;
+    background:#111;
+    color:white;
+    overflow-x:hidden;
 }
 
-header {
-    background: #1a1a1a;
-    padding: 20px;
-    text-align: center;
-    font-size: 30px;
-    font-weight: bold;
-    color: #ffd700;
-    letter-spacing: 3px;
-    box-shadow: 0 0 20px rgba(255,215,0,0.5);
+/* Динамический градиент */
+body::before{
+    content:'';
+    position:fixed;
+    top:0;left:0;width:100%;height:100%;
+    background:linear-gradient(120deg,#ffcc00,#ff9900,#ffcc00);
+    background-size:400% 400%;
+    animation: gradientMove 20s ease infinite;
+    z-index:-1;
+    opacity:0.05;
+}
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
-.categories {
-    text-align: center;
-    margin: 30px 0;
+/* Header */
+header{
+    background:#1a1a1a;
+    padding:25px;
+    text-align:center;
+    font-size:36px;
+    font-weight:bold;
+    color:#ffd700;
+    letter-spacing:5px;
+    box-shadow:0 0 30px rgba(255,215,0,0.7);
 }
 
-.categories button {
-    background: #1c1c1c;
-    color: #ffd700;
-    border: 2px solid #ffd700;
-    padding: 8px 18px;
-    margin: 5px;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: 0.3s;
+/* О нас */
+.about{
+    background:linear-gradient(90deg,#1a1a1a,#222);
+    padding:50px 20px;
+    text-align:center;
+    box-shadow:0 0 30px rgba(255,215,0,0.2);
+    position:relative;
+}
+.about h2{
+    color:#ffd700;
+    font-size:32px;
+    margin-bottom:20px;
+    letter-spacing:2px;
+    text-shadow:0 0 10px #ffd700;
+    animation:fadeIn 1s ease forwards;
+}
+.about p{
+    font-size:18px;
+    max-width:900px;
+    margin:0 auto 30px;
+    color:#eee;
+    line-height:1.6;
+    animation:fadeIn 1.5s ease forwards;
+}
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+.stat-item{
+    background:#1c1c1c;
+    padding:25px;
+    border-radius:20px;
+    min-width:160px;
+    box-shadow:0 0 20px rgba(255,215,0,0.3);
+    transition:0.3s;
+}
+.stat-item:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 25px #ffd700;
+}
+.stat-item h3{
+    font-size:26px;
+    color:#ffd700;
+    margin-bottom:8px;
+}
+.stat-item p{
+    margin:0;font-size:16px;color:#ddd;
 }
 
-.categories button:hover {
-    background: #ffd700;
-    color: black;
+/* Анимация появления */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* Категории */
+.categories{text-align:center;margin:30px 0;}
+.categories button{
+    background:#1c1c1c;
+    color:#ffd700;
+    border:2px solid #ffd700;
+    padding:10px 22px;
+    margin:5px;
+    border-radius:30px;
+    cursor:pointer;
+    transition:0.4s;
+    font-weight:bold;
+}
+.categories button:hover{
+    background:#ffd700;color:#111;
+    box-shadow:0 0 15px #ffd700;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    padding: 0 40px 40px;
+/* Контейнер товаров */
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+    padding:0 40px 50px;
 }
 
-.card {
-    background: #1c1c1c;
-    border-radius: 18px;
-    overflow: hidden;
-    text-align: center;
-    transition: 0.3s;
-    position: relative;
-    box-shadow: 0 0 15px rgba(255,215,0,0.2);
+/* Карточка товара */
+.card{
+    background:#1c1c1c;
+    border-radius:20px;
+    overflow:hidden;
+    text-align:center;
+    transition:0.5s;
+    position:relative;
+    box-shadow:0 0 20px rgba(255,215,0,0.2);
+    cursor:pointer;
+}
+.card:hover{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:0 0 35px rgba(255,215,0,0.7);
+    border:2px solid #ffd700;
+}
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    transition:0.5s;
+}
+.card:hover img{
+    transform:scale(1.05);
+}
+.price-badge{
+    position:absolute;
+    top:12px;
+    left:12px;
+    background:#ffd700;
+    color:#111;
+    padding:8px 16px;
+    border-radius:25px;
+    font-weight:bold;
+    font-size:14px;
+}
+.coming{background:#c0c0c0;color:#111;}
+.buy{
+    background:#ffd700;
+    border:none;
+    padding:12px 24px;
+    border-radius:12px;
+    margin:15px 0 20px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+.buy:hover{background:#ffcc00;box-shadow:0 0 15px #ffd700;}
+.disabled{background:gray;cursor:not-allowed;}
+
+/* Модалка */
+.modal{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background:rgba(0,0,0,0.8);
+    display:none;justify-content:center;align-items:center;
+    z-index:1000;
+}
+.modal-content{
+    background:#1c1c1c;
+    padding:35px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 0 30px rgba(255,215,0,0.6);
+    max-width:380px;width:90%;
+}
+.contact{
+    background:#ffd700;color:#111;padding:12px;border-radius:12px;font-weight:bold;margin:15px 0;
 }
 
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 0 25px rgba(255,215,0,0.6);
+/* Ошибка Launcher */
+.error-box{
+    position:fixed;top:-100px;left:50%;transform:translateX(-50%);
+    background:#c40000;color:white;padding:15px 25px;border-radius:15px;
+    box-shadow:0 0 25px rgba(255,0,0,0.7);
+    font-weight:bold;display:flex;align-items:center;gap:15px;
+    z-index:2000;transition:0.5s ease;
 }
-
-.card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.price-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: #ffd700;
-    color: black;
-    padding: 6px 14px;
-    border-radius: 25px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.coming {
-    background: #444;
-    color: white;
-}
-
-.buy {
-    background: #ffd700;
-    border: none;
-    padding: 10px 22px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin: 15px 0 20px;
-    font-weight: bold;
-}
-
-.buy:hover {
-    background: #ffcc00;
-}
-
-.disabled {
-    background: gray;
-    cursor: not-allowed;
-}
-
-.hidden {
-    display: none;
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    background: #1a1a1a;
-    color: #888;
-}
+.error-box.show{top:20px;}
+.error-close{cursor:pointer;font-size:20px;font-weight:bold;}
+footer{text-align:center;padding:25px;background:#1a1a1a;color:#888;margin-top:30px;}
 </style>
 </head>
-
 <body>
 
 <header>PHOENIX SHOP</header>
 
+<!-- О нас -->
+<div class="about">
+    <h2>Почему PHOENIX выбирают тысячи пользователей</h2>
+    <p>
+        Мы создаем уникальные решения для вашего бизнеса и сообщества. Каждый проект полностью настроен под ваши нужды, 
+        объединяя стильный дизайн и функциональность. Наша команда заботится о каждом клиенте, предлагая только качественные продукты.
+    </p>
+    <p>
+        С нами вы получаете не просто продукт, а уверенность в успехе, безопасность и поддержку на каждом шагу. 
+        Присоединяйтесь к тысячам довольных клиентов по всему миру.
+    </p>
+    <div class="stats">
+        <div class="stat-item"><h3 id="clients">0</h3><p>Довольных клиентов</p></div>
+        <div class="stat-item"><h3 id="projects">0</h3><p>Проектов завершено</p></div>
+        <div class="stat-item"><h3 id="awards">0</h3><p>Наград и достижений</p></div>
+    </div>
+</div>
+
+<!-- Категории -->
 <div class="categories">
     <button onclick="filter('all')">Все</button>
     <button onclick="filter('forum')">Форумы</button>
     <button onclick="filter('site')">Сайты</button>
     <button onclick="filter('universal')">Универсальные</button>
-    <button onclick="filter('launcher')">Лаунчеры (скоро)</button>
+    <button onclick="filter('launcher')">Лаунчеры</button>
 </div>
 
+<!-- Товары -->
 <div class="container">
-
-<!-- Форумы -->
-<div class="card forum">
-    <div class="price-badge">45₽</div>
-    <img src="FBr.png">
-    <h3>FORUM Black Russia</h3>
-    <p>Форум полностью настроен</p>
-    <button class="buy">Купить</button>
+    <div class="card forum"><div class="price-badge">45₽</div><img src="FBr.png"><h3>FORUM Black Russia</h3><button class="buy">Купить</button></div>
+    <div class="card forum"><div class="price-badge">45₽</div><img src="FAz.png"><h3>FORUM Arizona</h3><button class="buy">Купить</button></div>
+    <div class="card forum"><div class="price-badge">40₽</div><img src="Fm.png"><h3>FORUM Матрешка</h3><button class="buy">Купить</button></div>
+    <div class="card universal"><div class="price-badge">35₽</div><img src="Un.png"><h3>Универсальный сайт</h3><button class="buy">Купить</button></div>
+    <div class="card site"><div class="price-badge">15₽</div><img src="SBr.png"><h3>Site Black Russia</h3><button class="buy">Купить</button></div>
+    <div class="card site"><div class="price-badge">55₽</div><img src="SAz.png"><h3>Site Arizona</h3><button class="buy">Купить</button></div>
+    <div class="card launcher" id="launcherCard"><div class="price-badge coming">Скоро</div><img src="launcher.png"><h3>Launcher PHOENIX</h3><button class="buy disabled">Купить</button></div>
 </div>
 
-<div class="card forum">
-    <div class="price-badge">45₽</div>
-    <img src="FAz.png">
-    <h3>FORUM Arizona</h3>
-    <p>Форум полностью настроен</p>
-    <button class="buy">Купить</button>
-</div>
+<!-- Модалка -->
+<div id="buyModal" class="modal"><div class="modal-content">
+    <h2>Покупка товара</h2>
+    <p>Для покупки напишите:</p>
+    <div class="contact">@PHOENIX_KINGG</div>
+    <button onclick="closeModal()" class="buy">Закрыть</button>
+</div></div>
 
-<div class="card forum">
-    <div class="price-badge">40₽</div>
-    <img src="Fm.png">
-    <h3>FORUM Матрешка</h3>
-    <p>Форум полностью настроен</p>
-    <button class="buy">Купить</button>
-</div>
+<!-- Ошибка Launcher -->
+<div id="errorBox" class="error-box">Лаунчеры временно недоступны <span class="error-close" onclick="hideError()">✖</span></div>
 
-<!-- Универсальный -->
-<div class="card universal">
-    <div class="price-badge">35₽</div>
-    <img src="Un.png">
-    <h3>Универсальный сайт</h3>
-    <p>Установочный сайт с вашими названиями</p>
-    <button class="buy">Купить</button>
-</div>
-
-<!-- Сайты -->
-<div class="card site">
-    <div class="price-badge">15₽</div>
-    <img src="SBr.png">
-    <h3>Site Black Russia</h3>
-    <p>Установочный сайт с вашими названиями</p>
-    <button class="buy">Купить</button>
-</div>
-
-<div class="card site">
-    <div class="price-badge">5₽</div>
-    <img src="SAz.png">
-    <h3>Site Arizona</h3>
-    <p>Установочный сайт с вашими названиями</p>
-    <button class="buy">Купить</button>
-</div>
-
-<!-- Лаунчеры (скоро) -->
-<div class="card launcher">
-    <div class="price-badge coming">Скоро</div>
-    <img src="launcher.png">
-    <h3>Launcher PHOENIX</h3>
-    <p>Скоро появится в продаже</p>
-    <button class="buy disabled" disabled>Недоступно</button>
-</div>
-
-</div>
-
-<footer>
-© 2026 PHOENIX SHOP | Все права защищены
-</footer>
+<footer>© 2026 PHOENIX SHOP | Все права защищены</footer>
 
 <script>
-function filter(category) {
-    let cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        if (category === 'all') {
-            card.classList.remove('hidden');
-        } else {
-            if (card.classList.contains(category)) {
-                card.classList.remove('hidden');
-            } else {
-                card.classList.add('hidden');
-            }
-        }
-    });
+// Анимация чисел
+function animateValue(id,start,end,duration){
+    let obj=document.getElementById(id);
+    let range=end-start;
+    let increment=end>start?1:-1;
+    let stepTime=Math.abs(Math.floor(duration/range));
+    let current=start;
+    let timer=setInterval(function(){current+=increment;obj.textContent=current;if(current==end)clearInterval(timer);},stepTime);
 }
+animateValue("clients",0,1387,2000);
+animateValue("projects",0,256,2000);
+animateValue("awards",0,37,2000);
+
+// Фильтрация
+function filter(category){document.querySelectorAll('.card').forEach(c=>{c.style.display=(category==='all'||c.classList.contains(category))?"block":"none";});}
+
+// Модалка покупки
+let modal=document.getElementById('buyModal');
+document.querySelectorAll('.card:not(.launcher) .buy').forEach(btn=>{btn.addEventListener('click', e=>{e.stopPropagation(); modal.style.display="flex";});});
+function closeModal(){modal.style.display="none";}
+
+// Ошибка Launcher
+let errorBox=document.getElementById('errorBox');let errorTimeout;
+document.getElementById('launcherCard').addEventListener('click', ()=>{
+    errorBox.classList.add("show");clearTimeout(errorTimeout);errorTimeout=setTimeout(()=>{hideError();},6000);
+});
+function hideError(){errorBox.classList.remove("show");}
 </script>
 
 </body>
